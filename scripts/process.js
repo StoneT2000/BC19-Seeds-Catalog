@@ -1,3 +1,6 @@
+//first line is infinite loop ones,multiple of 5??
+let brokenSeeds = [165,255,315,325, 578];
+
 var seedData = {castle1:[],castle2:[],castle3:[],difficultPathing:[]};
 
 var dataSet = {castle1:[],castle2:[],castle3:[],difficultPathing:[],easyPathing:[]};
@@ -12,7 +15,20 @@ $(document).ready(function () {
   });
   $("#lookUpSeed").on('click', function(){
     let mySeed = parseInt($("#checkSeed").val());
-    visualize(mySeed);
+    let okToUse = true;
+    for (let i = 0; i < brokenSeeds.length; i++) {
+      if (mySeed === brokenSeeds[i]) {
+        okToUse = false;
+        break;
+      }
+    }
+    if (okToUse) {
+      visualize(mySeed);
+    }
+    else {
+      alert("Seed: " + mySeed + " is possibly a little broken, try another one");
+    }
+    
   })
   //initialize catalogs
   $("#selectFromCatalog").on('change', function() {
