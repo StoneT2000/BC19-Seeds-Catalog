@@ -13,6 +13,8 @@ $(document).ready(function () {
     seedData = result;
     changeCatalog($("#selectFromCatalog").val());
   });
+  $("#checkSeed").val(3);
+  visualize(3);
   $("#lookUpSeed").on('click', function(){
     let mySeed = parseInt($("#checkSeed").val());
     let okToUse = true;

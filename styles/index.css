@@ -93,6 +93,7 @@ table td {
 }
 .catalog {
   height: 100%;
+  text-align: center;
 }
 .catalogDisplay-wrapper {
   overflow-x: scroll;
