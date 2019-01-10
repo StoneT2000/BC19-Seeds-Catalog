@@ -1,0 +1,106 @@
+.tile {
+  width:20px;
+  height:20px;
+  background-color: wheat;
+  display:inline-block;
+  border: 0.5px solid #e8efe8;
+  transition: width 0.2s, height 0.2s, border 0.2s;
+}
+/*
+.tile:hover {
+  border: 2px solid #e8efe8;
+  width: 22px;
+  height:22px;
+}
+*/
+.tileHover::after {
+  content:'';
+  width: 20px;
+  height:20px;
+  border: 1px solid yellow;
+  border-radius:50%;
+  position: absolute;
+  left:10px;
+}
+.map {
+  width: 645px;
+  height:640px;
+  position: relative;
+  margin: auto;
+}
+.bot {
+  /*1.6364/2*/
+  position: absolute;
+  width: 10px;
+  height:10px;
+  border-radius:50%;
+  top:0.8182px;
+  left:0.8182px;
+  
+  z-index:20;
+  transition: top 0.3s, left 0.3s;
+}
+.castle {
+  border-radius:1px;
+}
+.crusader {
+  border-color:4px white solid;
+}
+.pilgrim {
+  border-radius:50%;
+}
+.team-blue{
+  background-color: #48c7f9;
+}
+.team-red {
+  background-color: #ea5b5b;
+  
+}
+
+table {
+  margin: auto;
+  border-spacing:0px;
+  border: 2px solid #343a40;
+  margin-top:1rem;
+  font-family: Alegreya, sans-serif;
+}
+
+table tr {
+  margin:0px;
+  padding:0px;
+}
+
+table th {
+  padding: 10px;
+  font-size: 25px;
+  color: white;
+  font-weight: 300;
+  background-color: #6c757d;
+  border-top: 2px solid #343a40;
+  border-right: 2px solid #343a40;
+  border-bottom: 2px solid #343a40;
+  border-left: 2px solid #343a40;
+
+}
+
+table td {
+  color:#343a40;
+  border-bottom: 2px solid #343a40;
+  padding: 6px;
+  font-size: 20px;
+  border-right: 2px solid #343a40;
+  border-left: 2px solid #343a40;
+}
+.catalog {
+  height: 100%;
+}
+.catalogDisplay-wrapper {
+  overflow-x: scroll;
+  height:500px;
+  margin:10px;
+  
+}
+.catalogDisplay th {
+  position: sticky;
+  top:0px;
+}
