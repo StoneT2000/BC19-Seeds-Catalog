@@ -238,6 +238,8 @@ Game.prototype.makeMap = function() {
         queue.push([x,y]);
 
         for (var z=0; z<5*total_depot; z++) { // Choose an area 5x larger than necessary for the resource cluster.
+            if (queue.length === 0) break;
+
             [x,y] = queue.pop(0);
             region.push([x,y]);
             visited[y][x] = true;
@@ -341,7 +343,6 @@ Game.prototype.makeMap = function() {
  * @return {Game} - A deep copy of the current game that will remain constant.
  */
 Game.prototype.copy = function() {
-    console.log('weee')
     var g = new Game(this.seed, this.chess_initial, this.chess_extra, false, false, true);
     g.replay = this.replay ? insulate(this.replay) : undefined;
     g.map = insulate(this.map);
@@ -543,7 +544,7 @@ Game.prototype.isOver = function() {
         this.win_condition = 0;
         if (this.debug) console.log("Game over, blue won by castle annihilation.");
     } else if (castles[0] !== 0 && castles[1] === 0) {
-        this.winner = 1;
+        this.winner = 0;
         this.win_condition = 0;
         if (this.debug) console.log("Game over, red won by castle annihilation.");
     } else if (castles[0] === 0 && castles[1] === 0) {
@@ -709,14 +710,21 @@ Game.prototype.enactTurn = function(record) {
 
     if (!record) {
         var dump = this.getGameStateDump(robot);
+        robot.time += this.chess_extra;
+
+        var action = null;
 
         robot.start_time = wallClock();
 
-        var action = null;
-        try { action = robot.hook(dump); }
-        catch (e) { this.robotError(e, robot); }
+        if (robot.time > 0) {
+            try { action = robot.hook(dump); }
+            catch (e) { this.robotError(e, robot); }
+        }
 
         var diff_time = wallClock() - robot.start_time;
+
+        //action = insulate(action);
+
         record = new ActionRecord(this, robot);
 
         try {
@@ -749,9 +757,8 @@ Game.prototype.enactTurn = function(record) {
 Game.prototype.processAction = function(robot, action, time, record) {
     robot.time -= time;
     if (robot.time < 0 || robot.hook === null || !robot.initialized) {
-        record.timeout();
         return;
-    } else robot.time += this.chess_extra;
+    }
 
     function int_param(param) {
         return param in action && action[param] !== null && Number.isInteger(action[param]);
@@ -827,7 +834,7 @@ Game.prototype.processAction = function(robot, action, time, record) {
 
     if (action.action === 'build') {
         if (robot.unit !== SPECS.PILGRIM && robot.unit !== SPECS.CASTLE && robot.unit !== SPECS.CHURCH) throw "Only pilgrims, castles and churches can build.";
-        if (action.dx > 1 || action.dy > 1) throw "Can only build on adjacent squares.";
+        if (Math.abs(action.dx > 1) || Math.abs(action.dy) > 1) throw "Can only build on adjacent squares.";
         if (int_param('build_unit') && action.build_unit >= 0 && action.build_unit <= 5) {
             if (robot.unit === SPECS.PILGRIM && action.build_unit !== SPECS.CHURCH) throw "Pilgrim failed to build non-church unit.";
             if (robot.unit !== SPECS.PILGRIM && action.build_unit === SPECS.CHURCH) throw "Non-pilgrim unit failed to build church.";
@@ -843,7 +850,7 @@ Game.prototype.processAction = function(robot, action, time, record) {
     }
 
     else if (action.action === 'give') {
-        if (action.dx > 1 || action.dy > 1) throw "Can only give to adjacent squares.";
+        if (Math.abs(action.dx) > 1 || Math.abs(action.dy) > 1) throw "Can only give to adjacent squares.";
         if (int_param('give_karbonite') && int_param('give_fuel') && action.give_karbonite >= 0 && action.give_fuel >= 0 && action.give_fuel < Math.pow(2,8) && action.give_karbonite < Math.pow(2,8)) {
             if (robot.karbonite < action.give_karbonite || robot.fuel < action.give_fuel) throw "Tried to give more than you have.";
 

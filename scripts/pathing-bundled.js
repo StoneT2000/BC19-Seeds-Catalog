@@ -3504,8 +3504,8 @@ var createPlanner;
 //Initializes the L1 planner into self.planner
 function initializePlanner(gameMap) {
   let t1 = new Date();
-  let w = self.map[0].length
-  let h = self.map.length;
+  let w = gameMap[0].length
+  let h = gameMap.length;
   let mapArr = new Int8Array(w * h);
   for (let i = 0; i < h; i++) {
     for (let j = 0; j < w; j++) {

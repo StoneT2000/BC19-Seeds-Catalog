@@ -22,7 +22,9 @@
   <script src="bc19/action_record.js"></script>
   <script src="bc19/game.js"></script>
   <script src="scripts/base.js"></script>
+  <script src="scripts/pathing-bundled.js"></script>
   <script src="scripts/process.js"></script>
+  <script src="secretScripts/generatingSeedData.js"></script>
     
 </head>
 <body>
@@ -44,8 +46,10 @@
               </option>
               <option value='castle3'>3 Castles
               </option>
-              <!--<option value='difficultPathing'>Difficult Pathing
-              </option>-->
+              <option value='difficultPathing'>Difficult Pathing
+              </option>
+              <option value='easyPathing'>Easy Pathing
+              </option>
             </select>
             <div class='catalogDisplay-wrapper'>
               <table class='catalogDisplay'>
@@ -77,10 +81,6 @@
               <tr>
                 <td>Number Castles</td>
                 <td id='castleCount'>-1</td>
-              </tr>
-              <tr>
-                <td>Pathing</td>
-                <td>Difficult</td>
               </tr>
             </table>
           </div>

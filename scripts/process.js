@@ -1,18 +1,6 @@
-//var bcdata;
-//var reader = new FileReader();
-//var visualization;
-/*
-reader.onloadend = function() {
-  console.log("loaded");
-  bcdata = new Uint8Array(reader.result);
-  visualization = new visualize(bcdata);
-}
-*/
-/*
-var dataSet = {castle1: [{seed:3,size:32,castles:1,pathing:1},{seed:5,size:32,castles:1,pathing:0},{seed:8,size:38,castles:1,pathing:0}], castle2: [{seed:12,size:62,castles:2,pathing:1}], castle3: [{seed:6,size:38,castles:3,pathing:1}], difficultPathing: [{seed:3,size:32,castles:1,pathing:1},
-{seed:6,size:38,castles:3,pathing:1},{seed:12,size:62,castles:2,pathing:1}]}
-*/
 var seedData = {castle1:[],castle2:[],castle3:[],difficultPathing:[]};
+
+var dataSet = {castle1:[],castle2:[],castle3:[],difficultPathing:[],easyPathing:[]};
 
 $(document).ready(function () {
   $(function () {
@@ -101,54 +89,4 @@ function visualize(seed) {
 })
   
   
-}
-/*DONT UPLOAD THIS CODE*/
-function updateSeedData(seed) {
-  this.game = new Game(seed, 0, 0, false, false);
-  this.MAP_WIDTH = this.game.map[0].length;
-  this.MAP_HEIGHT = this.game.map.length;
-  let size = this.MAP_HEIGHT;
-  let castleCount = this.game.robots.length/2;
-  let thisData = {seed:seed, castles:castleCount, size:size, pathing:0};
-  let mapPlanner = initializePlanner(this.game.map);
-  
-  //determine difficulty
-  let path = [];
-  //var dist = planner.search(19,7, 23,7,  path);
-  
-  if (castleCount === 1) {
-    seedData['castle1'].push(thisData)
-  }
-  if (castleCount === 2) {
-    seedData['castle2'].push(thisData)
-  }
-  if (castleCount === 3) {
-    seedData['castle3'].push(thisData)
-  }
-}
-
-function saveSeedDataToJson() {
-  let myData = JSON.stringify(seedData);
-  download(myData, 'seed.json', 'text')
-}
-
-function determinePathingDifficulty
-
-
-function download(data, filename, type) {
-    var file = new Blob([data], {type: type});
-    if (window.navigator.msSaveOrOpenBlob) // IE10+
-        window.navigator.msSaveOrOpenBlob(file, filename);
-    else { // Others
-        var a = document.createElement("a"),
-                url = URL.createObjectURL(file);
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(function() {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);  
-        }, 0); 
-    }
 }
