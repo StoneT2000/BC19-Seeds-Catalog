@@ -1,5 +1,5 @@
 //first line is infinite loop ones,multiple of 5??
-let brokenSeeds = [165,255,315,325, 578];
+let brokenSeeds = [165,255,315,325, 578, 613, 721];
 
 var seedData = {castle1:[],castle2:[],castle3:[],difficultPathing:[]};
 
