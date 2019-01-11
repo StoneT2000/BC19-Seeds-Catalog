@@ -104,4 +104,9 @@ table td {
 .catalogDisplay th {
   position: sticky;
   top:0px;
+  font-size: 22px;
+}
+#selectFromCatalog {
+  width: 50%;
+  text-align: left;
 }

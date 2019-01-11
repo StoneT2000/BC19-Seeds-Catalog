@@ -1,9 +1,9 @@
 //first line is infinite loop ones,multiple of 5??
 let brokenSeeds = [165,255,315,325, 578, 613, 721];
 
-var seedData = {castle1:[],castle2:[],castle3:[],difficultPathing:[]};
-
-var dataSet = {castle1:[],castle2:[],castle3:[],difficultPathing:[],easyPathing:[]};
+//var seedData = {castle1:[],castle2:[],castle3:[],difficultPathing:[]};
+var seedData = [];
+var dataSet = [];//{castle1:[],castle2:[],castle3:[],difficultPathing:[],easyPathing:[]};
 
 $(document).ready(function () {
   $(function () {
@@ -36,13 +36,63 @@ $(document).ready(function () {
   $("#selectFromCatalog").on('change', function() {
     changeCatalog($("#selectFromCatalog").val());
   });
+  $("#showSize").on('click', function(){
+    if ($("#filterMapSize").val() === '') {
+      changeCatalog($("#selectFromCatalog").val());
+    }
+    else {
+      changeCatalog($("#selectFromCatalog").val(), parseInt($("#filterMapSize").val()));
+    }
+  })
   
 });
-function changeCatalog(key){
+function changeCatalog(arr, size = 'all'){
+  //select data as needed
+  let finalData = seedData.filter(function(a){
+    for (let i = 0 ; i < arr.length; i++) {
+      if (arr[i] === 'castle1') {
+        if (a.castles !== 1) {
+          return false;
+        }
+      }
+      else if (arr[i] === 'castle2') {
+        if (a.castles !== 2) {
+          return false;
+        }
+      }
+      else if (arr[i] === 'castle3') {
+        if (a.castles !== 3) {
+          return false;
+        }
+      }
+      else if (arr[i] === 'difficultPathing') {
+        if (a.pathing !== 1) {
+          return false;
+        }
+      }
+      else if (arr[i] === 'easyPathing') {
+        if (a.pathing !== 0) {
+          return false;
+        }
+      }
+      if (size !== 'all') {
+        if (a.size !== size) {
+          return false;
+        }
+      }
+    }
+    return true;
+  });
+  
+  
   $(".catalogDisplay").html('<th>Seed</th><th>Map Size</th><th>Castles</th><th>Pathing</th>');
-  for (let i = 0; i < seedData[key].length; i++) {
-    let data = seedData[key][i];
-    $(".catalogDisplay").append('<tr><td>' + data.seed + '</td><td>' + data.size + 'x' + data.size + '</td><td>' + data.castles + '</td><td>' + data.pathing + '</td></tr>');
+  for (let i = 0; i < finalData.length; i++) {
+    let data = finalData[i];
+    let pathingD = 'Easy';
+    if (data.pathing === 1) {
+      pathingD = 'Difficult'
+    }
+    $(".catalogDisplay").append('<tr><td>' + data.seed + '</td><td>' + data.size + 'x' + data.size + '</td><td>' + data.castles + '</td><td>' + pathingD + '</td></tr>');
   }
 }
 
@@ -79,7 +129,14 @@ function visualize(seed) {
     //data-toggle='tooltip' data-trigger='hover' data-title='test'
     tileElement.attr('data-toggle','tooltip');
     tileElement.attr('data-trigger','hover');
-    tileElement.attr('data-title','(' + x + ', ' + y + ')');
+    let desc = '';
+    if (color === FUEL) {
+      desc = 'Fuel Deposit: ';
+    }
+    else if (color === KARBONITE) {
+      desc = 'Karbonite Depsoit: ';
+    }
+    tileElement.attr('data-title',desc + '(' + x + ', ' + y + ')');
     //this.mapGraphics.drawRect(x*draw_width, y*draw_height, draw_width, draw_height);
     //this.mapGraphics.endFill();
   }
@@ -101,6 +158,11 @@ function visualize(seed) {
       color2 = BLUE;
     }
     $("#" + castle.x + "_"  + castle.y).css('background-color', color2);
+    let baseName = 'Red Castle: ';
+    if (color2 === BLUE) {
+      baseName = 'Blue Castle: ';
+    }
+    $("#" + castle.x + "_"  + castle.y).attr('data-title', baseName + '(' + castle.x + ', ' + castle.y + ')');
   }
   $(function () {
   $('[data-toggle="tooltip"]').tooltip()
