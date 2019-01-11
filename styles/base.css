@@ -36,12 +36,13 @@ button:focus {outline:0;}
 .footer a{
   color: RGB(52,58,64);
   margin-left: 5px;
+  vertical-align: middle
 }
 .footer span{
   display: inline;
   font-size: 12px;
   font-weight: 300;
-  vertical-align: text-top;
+  vertical-align: middle;
 }
 .octicon-mark-github, .octicon-mail{
   fill: RGB(52,58,64);
