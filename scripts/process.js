@@ -134,7 +134,7 @@ function visualize(seed) {
       desc = 'Fuel Deposit: ';
     }
     else if (color === KARBONITE) {
-      desc = 'Karbonite Depsoit: ';
+      desc = 'Karbonite Deposit: ';
     }
     tileElement.attr('data-title',desc + '(' + x + ', ' + y + ')');
     //this.mapGraphics.drawRect(x*draw_width, y*draw_height, draw_width, draw_height);
